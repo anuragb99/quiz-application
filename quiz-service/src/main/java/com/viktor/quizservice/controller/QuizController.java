@@ -1,6 +1,5 @@
 package com.viktor.quizservice.controller;
 
-import com.viktor.quizservice.dao.QuizDao;
 import com.viktor.quizservice.entity.QuestionWrapper;
 import com.viktor.quizservice.entity.QuizDto;
 import com.viktor.quizservice.entity.Response;
@@ -17,8 +16,6 @@ public class QuizController {
 
     @Autowired
     QuizService quizService;
-    @Autowired
-    private QuizDao quizDao;
 
     @PostMapping("create")
     public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizDto) {
