@@ -35,7 +35,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/validate")
+    @PostMapping("/validation")
     public String validateToken(@RequestParam String token){
         userCredentialsService.validateToken(token);
         return "Valid User";

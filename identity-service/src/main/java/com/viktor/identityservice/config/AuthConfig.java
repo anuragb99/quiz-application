@@ -36,7 +36,7 @@ public class AuthConfig {
         http.authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers(
-                                        "/auth/saveUser", "/auth/token", "/auth/validate"
+                                        "/auth/saveUser", "/auth/token", "/auth/validation"
                                 )
                                 .permitAll()
                                 // Add other authorization rules as needed
