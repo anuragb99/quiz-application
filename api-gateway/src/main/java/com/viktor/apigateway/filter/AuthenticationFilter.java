@@ -2,6 +2,8 @@ package com.viktor.apigateway.filter;
 
 
 import com.viktor.apigateway.util.JwtUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
+
+    Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
@@ -23,9 +27,10 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     @Override
     public GatewayFilter apply(Config config) {
-        return ((exchange, chain) -> {
+        return (exchange, chain) -> {
             if (validator.isSecured.test(exchange.getRequest())) {
                 //header contains token or not
+                logger.info("Inside heree");
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new RuntimeException("missing authorization header");
                 }
@@ -40,12 +45,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     jwtUtil.validateToken(authHeader);
 
                 } catch (Exception e) {
-                    System.out.println("invalid access...!");
+                    logger.info("invalid access...!");
                     throw new RuntimeException("un authorized access to application");
                 }
             }
             return chain.filter(exchange);
-        });
+        };
     }
 
     public static class Config{

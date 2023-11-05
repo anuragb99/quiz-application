@@ -6,6 +6,8 @@ import com.viktor.quizservice.entity.QuestionWrapper;
 import com.viktor.quizservice.entity.Quiz;
 import com.viktor.quizservice.entity.Response;
 import com.viktor.quizservice.feign.QuizInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.Optional;
 
 @Service
 public class QuizService {
+
+    Logger logger = LoggerFactory.getLogger(QuizService.class);
 
     @Autowired
     QuizDao quizDao;
@@ -46,6 +50,7 @@ public class QuizService {
 
     public ResponseEntity<List<QuestionWrapper>> getQuiz(Integer id) {
 
+        logger.info("Inside get QUIZ"+id);
         try{
             Optional<Quiz> quiz = quizDao.findById(id);
 
